@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            width: 350px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .recent-emails {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .recent-email {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .recent-email:hover {
+            background: #e9ecef;
+        }
+        .clear-btn {
+            background: #dc3545;
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+        .clear-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Referral x LPC Helper</div>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email to fill:</label>
+        <input type="email" id="email" placeholder="Enter email address">
+    </div>
+    
+    <button id="fillButton">Fill Email and Send Invitation</button>
+    <button id="openReferral">Open Referral Form</button>
+    
+    <div id="status"></div>
+    
+    <div class="info">
+        <strong>How to use:</strong><br>
+        1. Enter email above<br>
+        2. Go to referral page<br>
+        3. Click "Fill Email and Send Invitation"<br>
+    </div>
+    
+    <div class="recent-emails">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <strong>Recent emails:</strong>
+            <button class="clear-btn" id="clearHistory">Clear</button>
+        </div>
+        <div id="recentList"></div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

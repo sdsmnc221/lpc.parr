@@ -1,0 +1,26 @@
+{
+  "name": "lpc.parr.referral",
+  "version": "1.0.0",
+  "description": "Fillout to Referral referral code integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "referral",
+    "fillout",
+    "playwright",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT"
+}
