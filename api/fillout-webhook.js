@@ -1,5 +1,5 @@
 // api/fillout-webhook.js
-const { saveSubmission, broadcastToConnections } = require("../lib/storage.js");
+const storage = require("../lib/storage.js");
 
 // Function to generate pre-filled Referral link with URL parameter
 function generateReferralLink(email) {
@@ -42,8 +42,8 @@ module.exports = async function handler(req, res) {
           source: "query_param",
         };
 
-        await saveSubmission(submissionData);
-        await broadcastToConnections({
+        await storage.saveSubmission(submissionData);
+        await storage.broadcastToConnections({
           type: "new_submission",
           submission: submissionData,
         });
@@ -112,7 +112,7 @@ module.exports = async function handler(req, res) {
         if (!emailQuestion || !emailQuestion.value) {
           console.error("Email not found in submission");
 
-          await broadcastToConnections({
+          await storage.broadcastToConnections({
             type: "webhook_error",
             error: "Email not found in submission",
             submissionId: submission.submissionId,
@@ -136,7 +136,7 @@ module.exports = async function handler(req, res) {
       else {
         console.error("No valid email source found");
 
-        await broadcastToConnections({
+        await storage.broadcastToConnections({
           type: "webhook_error",
           error: "No valid email source found",
           timestamp: new Date().toISOString(),
@@ -164,7 +164,7 @@ module.exports = async function handler(req, res) {
         source: req.query.email ? "query_param" : "fillout_webhook",
       };
 
-      await saveSubmission(submissionData);
+      await storage.saveSubmission(submissionData);
 
       console.log("Generated Referral link info:", referralInfo);
       console.log("📧 Email:", email);
@@ -172,7 +172,7 @@ module.exports = async function handler(req, res) {
       console.log("📝 Instructions:", referralInfo.instructions);
 
       // Broadcast to connected clients
-      await broadcastToConnections({
+      await storage.broadcastToConnections({
         type: "new_submission",
         submission: submissionData,
       });
@@ -189,7 +189,7 @@ module.exports = async function handler(req, res) {
     } catch (error) {
       console.error("Error processing webhook:", error);
 
-      await broadcastToConnections({
+      await storage.broadcastToConnections({
         type: "webhook_error",
         error: error.message,
         timestamp: new Date().toISOString(),

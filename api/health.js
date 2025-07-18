@@ -1,7 +1,7 @@
 // api/health.js
-import { getRecentSubmissions, getConnectionsCount } from "../lib/storage.js";
+const storage = require("../lib/storage.js");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -17,14 +17,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const submissions = getRecentSubmissions();
+    const submissions = await storage.getRecentSubmissions();
 
     res.status(200).json({
       status: "healthy",
       timestamp: new Date().toISOString(),
       service: "fillout-referral-webhook-vercel",
       recentSubmissions: submissions.length,
-      connections: getConnectionsCount(),
+      connections: storage.getConnectionsCount(),
       environment: "serverless",
     });
   } catch (error) {
@@ -35,4 +35,4 @@ export default async function handler(req, res) {
       error: error.message,
     });
   }
-}
+};

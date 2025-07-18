@@ -1,5 +1,5 @@
 // api/recent-submissions.js
-const { getRecentSubmissions } = require("../lib/storage.js");
+const storage = require("../lib/storage.js");
 
 module.exports = async function handler(req, res) {
   // Enable CORS
@@ -18,22 +18,33 @@ module.exports = async function handler(req, res) {
 
   try {
     const limit = parseInt(req.query.limit) || 10;
-    const submissions = getRecentSubmissions(limit);
+    const submissions = await storage.getRecentSubmissions(limit);
 
     console.log(
       "Recent submissions request - found:",
-      submissions.length,
+      submissions ? submissions.length : "null/undefined",
       "submissions"
     );
+    console.log(
+      "Submissions type:",
+      typeof submissions,
+      "Is array:",
+      Array.isArray(submissions)
+    );
+
+    // Ensure submissions is always an array
+    const submissionsArray = Array.isArray(submissions) ? submissions : [];
 
     res.json({
-      total: submissions.length,
-      showing: submissions.length,
-      submissions: submissions,
+      total: submissionsArray.length,
+      showing: submissionsArray.length,
+      submissions: submissionsArray,
       debug: {
         timestamp: new Date().toISOString(),
         limit: limit,
-        memoryState: "fresh_start_each_call",
+        storageType: "redis",
+        originalType: typeof submissions,
+        isArray: Array.isArray(submissions),
       },
     });
   } catch (error) {

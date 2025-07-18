@@ -1,6 +1,6 @@
 // api/events.js
 // Simple polling endpoint for dashboard updates
-const { getRecentSubmissions } = require("../lib/storage.js");
+const storage = require("../lib/storage.js");
 
 module.exports = async function handler(req, res) {
   // Enable CORS
@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const submissions = getRecentSubmissions(50);
+    const submissions = await storage.getRecentSubmissions(50);
 
     res.json({
       type: "poll_response",

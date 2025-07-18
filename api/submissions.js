@@ -1,5 +1,5 @@
 // api/submission.js
-const { getSubmissionById } = require("../lib/storage.js");
+const storage = require("../lib/storage.js");
 
 module.exports = async function handler(req, res) {
   // Enable CORS
@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Submission ID is required" });
     }
 
-    const submission = getSubmissionById(submissionId);
+    const submission = await storage.getSubmissionById(submissionId);
 
     if (!submission) {
       return res.status(404).json({ error: "Submission not found" });
